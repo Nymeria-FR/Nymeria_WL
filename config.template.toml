@@ -2,6 +2,12 @@
 bot = true
 token = "XXXXXXXXXXXXXXXXXXXXXXXXX"
 guild = "XXXXXXXXXXXXXXXXXXXXXX"
-alert_chan = "XXXXXXXXXXXXXXXXXXXXXX"
-vocal_chan = "XXXXXXXXXXXXXXXXXXXXXX"
-sans_papier = "XXXXXXXXXXXXXXXXXXXXXX"
+
+[ping]
+
+    [ping.douane]
+        alert_chan = 0
+        vocal_chan = 0
+        role_ping = [0, 0]
+        accepte_role = [0, 0]
+        message = ""

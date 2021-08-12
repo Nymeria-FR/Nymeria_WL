@@ -23,7 +23,4 @@ class TomlConfig(Config):
         self.bot = bot["bot"]
         self.token = bot["token"]
         self.guild = bot["guild"]
-        self.role_ping = bot["role_ping"]
-        self.alert_chan = bot["alert_chan"]
-        self.vocal_chan = bot["vocal_chan"]
-        self.sans_papier = bot["sans_papier"]
+        self.ping = config["ping"]
