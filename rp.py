@@ -20,7 +20,6 @@ def get_ping(id):
 
 
 def role(member, ping_config):
-    print(len(ping_config["accepte_role"]))
     if len(ping_config["accepte_role"]) == 0:
         return True
     for role in member.roles:
@@ -32,7 +31,6 @@ def role(member, ping_config):
 async def ping(guild, ping_config):
     global chrono
     if time.time() - chrono < 5:
-        print("ok")
         return
     else:
         channel = guild.get_channel(ping_config["alert_chan"])
