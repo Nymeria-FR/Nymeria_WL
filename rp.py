@@ -1,27 +1,45 @@
 import discord
+import time
 
-from config import config
-from voice import voic_event_traitment, voice_commande
+
+from config import TomlConfig
 
 client = discord.Client()
+config = TomlConfig("config.toml", "config.template.toml")
+
+global chrono
+chrono = time.time()
 
 
-@client.event
-async def on_message(message):
-    if message.author.id != client.user.id:
-        if message.content.startswith("n!voice"):
-            reponse = await voice_commande(client, message)
-            if reponse is not None and reponse != "":
-                await message.channel.send(reponse)
+def role(member):
+    for role in member.roles:
+        if role.id == config.sans_papier:
+            return True
+    return False
+
+
+async def ping(guild):
+    global chrono
+    if time.time() - chrono < 5:
+        print("ok")
+        return
+    else:
+        role = guild.get_role(config.role_ping)
+        channel = guild.get_channel(config.alert_chan)
+        await channel.send(f"Un Sans Papier s'est connecté dans le channel {role.mention} !")
+        chrono = time.time()
 
 
 @client.event
 async def on_voice_state_update(member, before, after):
-    await voic_event_traitment(member, before, after, client)
+    if member.guild.id == config.guild:
+        if (not after.channel is None) and after.channel.id == config.vocal_chan:
+            if role(member):
+                await ping(member.guild)
 
 
 @client.event
 async def on_ready():
     print("Logged as {}!".format(client.user))
 
-client.run(config.token)
+client.run(config.token, bot=config.bot)
